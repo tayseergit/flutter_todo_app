@@ -58,7 +58,7 @@ class SqfliteCall {
   static getData(Database database) async {
     return await database.rawQuery('SELECT * FROM $tableName').then(
       (value) {
-        controller.newTaskval(value);
+        controller.Taskval(value);
         print("task : ${controller.newTask}");
       },
     ).catchError((e) {
@@ -66,11 +66,29 @@ class SqfliteCall {
     });
   }
 
-  static deletDatabase() async {
-    await deleteDatabase('todo.db').then((value) {
-      print("data deleted");
+  static Future deletData(int id) async {
+    return await database!
+        .rawDelete('DELETE FROM $tableName WHERE id = ?', [id]).then((value) {
+      print("$value raw deleted");
+    }).catchError((e) {
+      print("$id cant deleted");
+    });
+  }
+
+  static Future setDoneTask({
+    required int id,
+    required String newStatus,
+  }) async {
+    return await database!.rawUpdate(
+        'UPDATE $tableName SET status = ? WHERE id = ?',
+        [newStatus, id]).then((v) {
+      print("$v updated");
     }).catchError((e) {
       print(e.toString());
     });
+  }
+
+  static Future<int> deleteAllData() async {
+    return await database!.delete(tableName);
   }
 }

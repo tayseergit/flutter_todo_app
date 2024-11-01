@@ -1,14 +1,19 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:todo/data/local/sqflite.dart';
+import 'package:todo/domain/Them_controller.dart';
 import 'package:todo/domain/controller.dart';
 import 'package:todo/ui/pages/done_page/done_task.dart';
 import 'package:todo/ui/pages/new_task_page/new_task.dart';
 import 'package:todo/ui/style/appColor.dart';
 import 'package:flutter/material.dart';
 
+GetStorage box = GetStorage();
+
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   HomeController controller = Get.put(HomeController());
+  ThemController themController = Get.put(ThemController());
   String them = "white";
 
   List<Widget> bodies = [
@@ -29,13 +34,11 @@ class HomePage extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    if (them == "white") {
-                      them = "black";
-                    } else
-                      them = "white";
+                    print("islight value is ${box.read("islight")}");
+                    themController.changeThem();
                   },
                   icon: Icon(
-                    Icons.sunny,
+                    themController.isLight ? Icons.dark_mode : Icons.light_mode,
                   ),
                 ),
               ],
@@ -43,7 +46,7 @@ class HomePage extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  SqfliteCall.deletDatabase();
+                  controller.deleteAllTasks();
                   SqfliteCall.getData(SqfliteCall.database!);
                 },
                 icon: Icon(
@@ -69,7 +72,7 @@ class HomePage extends StatelessWidget {
           ),
           body: bodies[c.selected],
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.grey[300],
+            // backgroundColor: Colors.grey[300],
             currentIndex: c.selected,
             onTap: (index) {
               c.changePage(index);

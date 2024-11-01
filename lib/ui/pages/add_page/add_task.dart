@@ -12,6 +12,7 @@ import 'package:todo/ui/widget/defult_botton.dart';
 import 'package:todo/ui/widget/defult_field_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/ui/widget/snakbar.dart';
 
 class AddTaskPage extends StatefulWidget {
   AddTaskPage({super.key});
@@ -45,23 +46,24 @@ class _AddTaskPageState extends State<AddTaskPage> {
         .format(DateTime(2022, 1, 1, hourLater.hour, hourLater.minute));
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 162, 192, 223),
+      // backgroundColor: Color,
       body: SingleChildScrollView(
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 8.0, right: 10, top: 30, bottom: 10),
+                padding:
+                    const EdgeInsets.only(left: 8.0, right: 10, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.to(() => HomePage(),
+                            transition: Transition.leftToRight,
+                            duration: Duration(milliseconds: 1500));
                       },
                       icon: Icon(
                         Icons.arrow_back_ios,
@@ -137,7 +139,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               //////////////////////////  for background
               Container(
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(144, 171, 243, 153),
+                    // color: Color.fromARGB(144, 171, 243, 153),
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -176,6 +178,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             text: "Date",
                             hinttext:
                                 "${DateFormat.yMd().format(DateTime.now())}",
+                            readonly: true,
                             keyboard: TextInputType.none,
                             suffix: IconButton(
                                 onPressed: () {
@@ -205,6 +208,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                 child: DefultFormText(
                                   controller: controllers[3],
                                   text: "Start Time",
+                                  readonly: true,
                                   hinttext: TimeOfDay.now().format(context),
                                   keyboard: TextInputType.none,
                                   suffix: IconButton(
@@ -230,6 +234,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                 child: DefultFormText(
                                   controller: controllers[4],
                                   text: "End Time",
+                                  readonly: true,
                                   hinttext: hourLaterTime,
                                   keyboard: TextInputType.none,
                                   suffix: IconButton(
@@ -256,6 +261,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           DefultFormText(
                             controller: controllers[5],
                             text: "Remind",
+                            readonly: true,
                             keyboard: TextInputType.none,
                             suffix: DropdownButton(
                               dropdownColor: Colors.grey[300],
@@ -292,7 +298,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           DefultFormText(
                             controller: controllers[6],
                             text: "Repeat",
-                            keyboard: TextInputType.none,
+                            readonly: true,
                             suffix: DropdownButton(
                               dropdownColor: Colors.grey[300],
                               borderRadius: BorderRadius.circular(15),
@@ -347,7 +353,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           controllers[2].text.isEmpty ||
                           controllers[3].text.isEmpty ||
                           controllers[4].text.isEmpty) {
-                        print("form is emty");
+                        CustomSnackbar.showSnackbar(
+                            "there is empty field", ".......", Colors.red);
                       } else {
                         SqfliteCall.insertData(
                           TaskModel(
@@ -362,11 +369,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           ),
                         ).then((value) {
                           SqfliteCall.getData(SqfliteCall.database!);
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
-                              (route) => false);
+                          Get.to(() => HomePage(),
+                              transition: Transition.leftToRight,
+                              duration: Duration(milliseconds: 1500));
                         }).catchError((e) {
                           print(e.toString());
                         });

@@ -10,13 +10,14 @@ class DefultFormText extends StatelessWidget {
     required this.controller,
     this.hinttext = '',
     this.keyboard,
+    this.readonly = false,
   });
   // void function() onTap;
   String text, hinttext;
   Widget? suffix;
   TextEditingController controller;
   TextInputType? keyboard;
-
+  bool readonly;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,14 +28,19 @@ class DefultFormText extends StatelessWidget {
           size: 20,
         ),
         TextFormField(
+          readOnly: readonly,
           // onTap: onTap,
           controller: controller,
           keyboardType: keyboard,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[600]),
           decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
               hintText: hinttext,
+              hintStyle: TextStyle(color: Colors.grey[600]),
               suffixIcon: suffix,
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
