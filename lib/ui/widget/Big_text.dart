@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:todo/main.dart';
 
 class BigText extends StatelessWidget {
   String text;
@@ -19,7 +22,7 @@ class BigText extends StatelessWidget {
       overflow: TextOverflow.ellipsis, // Shows "..."
       maxLines: 1, // Limits text to 1 line
       style: TextStyle(
-        fontSize: size,
+        fontSize: size.sp,
         fontWeight: weight,
         color: color,
         letterSpacing: letterSpacing,

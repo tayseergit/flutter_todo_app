@@ -1,15 +1,14 @@
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo/domain/Them_controller.dart';
 import 'package:todo/domain/splash_controller.dart';
-import 'package:todo/ui/layout/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   await GetStorage.init();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  await ScreenUtil.ensureScreenSize();
+
   runApp(MyApp());
 }
 
@@ -20,20 +19,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ThemController>(
-      builder: (c) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.light,
-          textTheme: TextTheme(),
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          textTheme: TextTheme(),
-        ),
-        themeMode: c.isLight ? ThemeMode.light : ThemeMode.dark,
-        home: SplashScreen(),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(384.0, 784.0),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetBuilder<ThemController>(
+          builder: (c) => GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              textTheme: TextTheme(),
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              textTheme: TextTheme(),
+            ),
+            themeMode: c.isLight ? ThemeMode.light : ThemeMode.dark,
+            home: SplashScreen(),
+          ),
+        );
+      },
     );
   }
 }

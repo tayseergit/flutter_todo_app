@@ -49,7 +49,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
       // backgroundColor: Color,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,9 +62,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        Get.to(() => HomePage(),
-                            transition: Transition.leftToRight,
-                            duration: Duration(milliseconds: 1500));
+                        Get.back();
                       },
                       icon: Icon(
                         Icons.arrow_back_ios,
@@ -235,6 +234,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                   controller: controllers[4],
                                   text: "End Time",
                                   readonly: true,
+                                  
                                   hinttext: hourLaterTime,
                                   keyboard: TextInputType.none,
                                   suffix: IconButton(
@@ -369,9 +369,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           ),
                         ).then((value) {
                           SqfliteCall.getData(SqfliteCall.database!);
-                          Get.to(() => HomePage(),
-                              transition: Transition.leftToRight,
-                              duration: Duration(milliseconds: 1500));
+                          Get.off(HomePage());
                         }).catchError((e) {
                           print(e.toString());
                         });

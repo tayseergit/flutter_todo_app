@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:sqflite/utils/utils.dart';
 import 'package:todo/data/local/sqflite.dart';
 import 'package:todo/domain/controller.dart';
+import 'package:todo/main.dart';
 import 'package:todo/ui/pages/add_page/add_task.dart';
 import 'package:todo/ui/style/appColor.dart';
 import 'package:todo/ui/widget/Big_text.dart';
@@ -59,8 +61,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
                     return AddTaskPage();
                   }));
                 },
-                hight: 60,
-                width: 120,
+                hight: 60.sp,
+                width: 120.sp,
                 child: Smalltext(
                   "+Add Task",
                   color: Colors.white,
@@ -71,8 +73,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
           ),
           DatePicker(
             DateTime.now(),
-            height: 110,
-            width: 80,
+            height: 110.sp,
+            width: 80.sp,
             selectionColor: AppColor.primaryColor,
             onDateChange: (date) {
               setState(() {
@@ -131,17 +133,22 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                   InkWell(
                                     onTap: () {
                                       Get.bottomSheet(Container(
-                                        color: AppColor.secondcolor,
-                                        height: Get.height * .33,
+                                        // color: Theme.of(context).brightness ==
+                                        //         Brightness.dark
+                                        //     ? Colors
+                                        //         .grey[900] // Dark mode color
+                                        //     : Colors.white, // Light mode color
+                                        height: 250.h,
                                         width: double.infinity,
                                         child: Padding(
-                                          padding: const EdgeInsets.all(30),
+                                          padding: const EdgeInsets.only(
+                                              top: 10, right: 30, left: 30),
                                           child: Column(
                                             children: [
                                               Container(
-                                                width: Get.width * 0.2,
+                                                width: 100.w,
                                                 color: Colors.black,
-                                                height: Get.height * .01,
+                                                height: 10.h,
                                               ),
                                               SizedBox(
                                                 height: 20,
@@ -165,10 +172,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                                 color: const Color.fromARGB(
                                                     255, 228, 118, 110),
                                                 width: double.infinity,
-                                                hight: Get.height * .06,
+                                                hight: 50.h,
                                               ),
                                               SizedBox(
-                                                height: 20,
+                                                height: 20.h,
                                               ),
                                               DefultBotton(
                                                 onTap: () {
@@ -188,10 +195,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                                 child: BigText("Done"),
                                                 color: AppColor.primaryColor,
                                                 width: double.infinity,
-                                                hight: Get.height * .06,
+                                                hight: 50.h,
                                               ),
                                               SizedBox(
-                                                height: Get.height * 0.02,
+                                                height: 20.h,
                                               ),
                                               DefultBotton(
                                                 onTap: () {
@@ -200,7 +207,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                                 child: Smalltext("close"),
                                                 color: const Color.fromARGB(
                                                     255, 146, 144, 158),
-                                                hight: Get.height * .04,
+                                                hight: 30.h,
                                               )
                                             ],
                                           ),
@@ -208,7 +215,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                       ));
                                     },
                                     child: Container(
-                                      height: Get.height * 0.2,
+                                      height: 180.h,
                                       width: double.infinity,
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -224,13 +231,14 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Wrap(children: <Widget>[
-                                                  BigText(
+                                                Container(
+                                                  width: 300.w,
+                                                  child: BigText(
                                                     controller.newTask[index]
                                                         ["title"],
                                                     color: Colors.white,
                                                   ),
-                                                ]),
+                                                ),
                                                 SizedBox(
                                                   height: 5,
                                                 ),
@@ -254,7 +262,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                                 ),
                                                 Container(
                                                   // height: 20,
-                                                  width: Get.width / 1.5,
+                                                  width: 300.w,
                                                   child: Smalltext(
                                                     " *   ${controller.newTask[index]["note"]}",
                                                     color: Colors.white,

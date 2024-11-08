@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:todo/ui/widget/Small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +34,7 @@ class DefultFormText extends StatelessWidget {
           controller: controller,
           keyboardType: keyboard,
           style: TextStyle(
-              fontSize: 16,
+              fontSize: 16 * Get.textScaleFactor,
               fontWeight: FontWeight.bold,
               color: Colors.grey[600]),
           decoration: InputDecoration(

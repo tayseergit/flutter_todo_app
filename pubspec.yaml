@@ -15,10 +15,11 @@ dependencies:
   intl:
   sqflite:
   get:
-  animated_do:
   get_storage :
   date_picker_timeline:
   flutter_staggered_animations:
+  flutter_local_notifications:
+  flutter_screenutil:
  
   cupertino_icons: ^1.0.2
 

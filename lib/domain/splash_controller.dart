@@ -19,12 +19,12 @@ class SplashController extends GetxController {
     isFirstImageVisible.value = true;
 
     // After 2 seconds, hide first image and show second image
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 1), () {
       // isFirstImageVisible.value = false;
       isSecondImageVisible.value = true;
 
       // After 2 more seconds, navigate to HomePage
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(Duration(seconds: 1), () {
         _navigateToHome();
       });
     });
@@ -33,6 +33,6 @@ class SplashController extends GetxController {
   void _navigateToHome() {
     Get.off(() => HomePage(),
         transition: Transition.rightToLeftWithFade,
-        duration: Duration(milliseconds: 1500));
+        duration: Duration(milliseconds: 1000));
   }
 }
